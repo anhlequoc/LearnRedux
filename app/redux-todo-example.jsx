@@ -7,9 +7,26 @@ var stateDefault = {
   todos: []
 };
 var reducer = (state = stateDefault, action) => {
-  return state;
+  switch (action.type) {
+    case 'CHANGE_SEARCH_TEXT':
+      return {
+        ...state,
+        searchText: action.searchText //override the searchText property
+      };
+      break;
+    default:
+      return state;
+  }
 };
 
 var store = redux.createStore(reducer);
 var currentState = store.getState();
 console.log('currentState: ', currentState);
+
+var action = {
+  type: "CHANGE_SEARCH_TEXT",
+  searchText: "test search text"
+};
+store.dispatch(action);
+
+console.log("change searchText", store.getState());

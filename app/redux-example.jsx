@@ -14,9 +14,26 @@ var reducer = (state = {name: 'Anonymous'}, action) => {
   //reducer satisfied 2 condions:
   // 1. reducer has default state, is just getting started
   // 2. reducer return a state even if there is no action or an action doesn't recognize
-  return state;
+
+  switch (action.type) {
+    case 'CHANGE_NAME':
+      return {
+        ...state,
+        name: action.name
+      };
+      break;
+    default:
+      return state;
+  }
 };
 var store = redux.createStore(reducer);
 
 var currentState = store.getState(); //getState() returns our object, in this case it return an object with the name property is "Anonymous"
 console.log('currentState', currentState);
+
+var action = {
+  type: 'CHANGE_NAME', //common rule for type of action
+  name: 'Anh'
+};
+store.dispatch(action); //dispatch action to store
+console.log('name should be Anh', store.getState());
