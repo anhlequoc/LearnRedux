@@ -26,7 +26,18 @@ var reducer = (state = {name: 'Anonymous'}, action) => {
       return state;
   }
 };
-var store = redux.createStore(reducer);
+var store = redux.createStore(reducer, redux.compose(
+  window.devToolsExtension ? window.devToolsExtension() : f => f // (f) => return f;
+));
+
+// Subcribe to changes - using callback
+var unsubscribe = store.subscribe(() => { // khi khai bảo unsubscribe, chỉ cần gọi function này ở dưới, các dispatch sau đó sẽ không được update vào state
+  var state = store.getState();
+
+  console.log('currentState is', state.name);
+  document.getElementById('app').innerHTML = state.name;
+});
+//unsubscribe();
 
 var currentState = store.getState(); //getState() returns our object, in this case it return an object with the name property is "Anonymous"
 console.log('currentState', currentState);
@@ -36,4 +47,8 @@ var action = {
   name: 'Anh'
 };
 store.dispatch(action); //dispatch action to store
-console.log('name should be Anh', store.getState());
+
+store.dispatch({
+  type: 'CHANGE_NAME',
+  name: 'Le le'
+});
