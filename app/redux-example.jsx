@@ -8,11 +8,18 @@ console.log('starting redux example');
 //createStore() takes one argument which is a pure function - this pure function in redux is called as reducer
 // reducer takes existing state and the action as arguments and compute the new state - for todo app, I triggered an action to change the search text, I would modify the stae with the action and I would return the new state
 
-var reducer = (state = {name: 'Anonymous'}, action) => {
+var stateDefault = {
+  name: "Anonymous",
+  hobbies: [],
+  movies: []
+}
+var nextHobbyId = 1;
+var nextMovieId = 1;
+var reducer = (state = stateDefault, action) => {
   //state = state || {name: "Anonymous");
 
   //reducer satisfied 2 condions:
-  // 1. reducer has default state, is just getting started
+   // 1. reducer has default state, is just getting started
   // 2. reducer return a state even if there is no action or an action doesn't recognize
 
   switch (action.type) {
@@ -22,6 +29,42 @@ var reducer = (state = {name: 'Anonymous'}, action) => {
         name: action.name
       };
       break;
+    case 'ADD_HOBBY':
+      return {
+        ...state,
+        hobbies: [
+          ...state.hobbies,
+          {
+            id: nextHobbyId++,
+            hobby: action.hobby
+          }
+        ]
+      }
+    case 'REMOVE_HOBBY':
+      return {
+        ...state,
+        hobbies: state.hobbies.filter(function (hobby) {
+          return hobby.id !== action.id; //true will keep hobby, false will remove
+        })
+      }
+    case 'ADD_MOVIE':
+      return {
+        ...state,
+        movies: [
+          ...state.movies,
+          {
+            id: nextMovieId++,
+            title: action.title,
+            genre: action.genre
+          }
+        ]
+      }
+    case 'REMOVE_MOVIE':
+      return {
+        ...state,
+        //cach viet khac dung arrow function
+        movies: state.movies.filter( (movie) => movie.id !== action.id)
+      }
     default:
       return state;
   }
@@ -36,6 +79,7 @@ var unsubscribe = store.subscribe(() => { // khi khai bảo unsubscribe, chỉ c
 
   console.log('currentState is', state.name);
   document.getElementById('app').innerHTML = state.name;
+  console.log("new state is", store.getState());
 });
 //unsubscribe();
 
@@ -49,6 +93,38 @@ var action = {
 store.dispatch(action); //dispatch action to store
 
 store.dispatch({
+  type:'ADD_HOBBY',
+  hobby: 'running'
+})
+
+store.dispatch({
+  type:'ADD_HOBBY',
+  hobby: 'playing'
+})
+
+store.dispatch({
+  type: 'REMOVE_HOBBY',
+  id: 2
+})
+
+store.dispatch({
   type: 'CHANGE_NAME',
   name: 'Le le'
 });
+
+store.dispatch({
+  type: 'ADD_MOVIE',
+  title: 'movie 1',
+  genre: 'drama'
+});
+
+store.dispatch({
+  type: 'ADD_MOVIE',
+  title: 'movie 2',
+  genre: 'anime'
+});
+
+store.dispatch({
+  type: 'REMOVE_MOVIE',
+  id: 1
+})

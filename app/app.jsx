@@ -12,5 +12,5 @@ require('style!css!sass!applicationStyles');{/*load alias applicationStyles in w
 // 	document.getElementById('app')
 // );
 
-// require("./redux-example.jsx");
-require('./redux-todo-example.jsx');
+require("./redux-example.jsx");
+// require('./redux-todo-example.jsx');
