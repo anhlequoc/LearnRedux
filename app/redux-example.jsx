@@ -88,8 +88,8 @@ var changeName = (name) => {
   return {
     type: 'CHANGE_NAME',
     name: name //ES6: có thể viết là name khi truyền vào là name rồi: {type: 'CHANGE_NAME', name}
-  }
-}
+  };
+};
 
 // Hobby reducer and action generators
 // ------------
@@ -207,7 +207,7 @@ var fetchLocation = () => {
   store.dispatch(startLocationFetch());
   axios.get('http://ipinfo.io').then(function(res) {
     var loc = res.data.loc;
-    var baseURL = 'http://maps.google.com?q='
+    var baseURL = 'http://maps.google.com?q=';
 
     store.dispatch(completeLocationFetch(baseURL + loc));
   });
@@ -218,7 +218,7 @@ var reducer = redux.combineReducers({
   hobbies: hobbiesReducer,
   movies: moviesReducer,
   map: mapReducer
-})
+});
 
 var store = redux.createStore(reducer, redux.compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f // (f) => return f;
