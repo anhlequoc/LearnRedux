@@ -8,13 +8,14 @@ console.log('starting redux example');
 //createStore() takes one argument which is a pure function - this pure function in redux is called as reducer
 // reducer takes existing state and the action as arguments and compute the new state - for todo app, I triggered an action to change the search text, I would modify the stae with the action and I would return the new state
 
+/* remove total state này sau khi chia các state con thành các reducer
 var stateDefault = {
   name: "Anonymous",
   hobbies: [],
   movies: []
 }
-var nextHobbyId = 1;
-var nextMovieId = 1;
+*/
+
 var oldReducer = (state = stateDefault, action) => {
   //state = state || {name: "Anonymous");
 
@@ -70,6 +71,8 @@ var oldReducer = (state = stateDefault, action) => {
   }
 };
 
+// Name reducer and action generators
+// ------------
 var nameReducer = (state = 'Anonymous', action) => {
   switch (action.type) {
     case 'CHANGE_NAME':
@@ -79,6 +82,17 @@ var nameReducer = (state = 'Anonymous', action) => {
   }
 };
 
+//An action generator is a simple function that takes the items required to generate the object with the type set on it - see below
+var changeName = (name) => {
+  return {
+    type: 'CHANGE_NAME',
+    name: name //ES6: có thể viết là name khi truyền vào là name rồi: {type: 'CHANGE_NAME', name}
+  }
+}
+
+// Hobby reducer and action generators
+// ------------
+var nextHobbyId = 1;
 var hobbiesReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_HOBBY':
@@ -98,6 +112,25 @@ var hobbiesReducer = (state = [], action) => {
   }
 }
 
+//action generator for ADD_HOBBY
+var addHobby = (hobby) => {
+  return {
+    type: 'ADD_HOBBY',
+    hobby: hobby
+  }
+};
+
+//action generator for REMOVE_HOBBY
+var removeHobby = (id) => {
+  return {
+    type: 'REMOVE_HOBBY',
+    id: id
+  }
+};
+
+// Movie reducer and action generators
+// ------------
+var nextMovieId = 1;
 var moviesReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_MOVIE':
@@ -117,6 +150,23 @@ var moviesReducer = (state = [], action) => {
       return state;
   }
 }
+
+//action generator for ADD MOVIE
+var addMovie = (title, genre) => {
+  return {
+    type: 'ADD_MOVIE',
+    title: title,
+    genre: genre
+  }
+};
+
+//action generator for REMOVE MOVIE
+var removeMovie = (id) => {
+  return {
+    type: 'REMOVE_MOVIE',
+    id: id
+  }
+};
 
 var reducer = redux.combineReducers({
   name: nameReducer, //name state will be managed by the nameReducer
@@ -162,10 +212,18 @@ store.dispatch({
   id: 2
 })
 
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Le le'
-});
+// store.dispatch({
+//   type: 'CHANGE_NAME',
+//   name: 'Le le'
+// });
+// dùng action generator như dưới
+
+store.dispatch(changeName('Le Le'));
+store.dispatch(changeName('Anh Le Le'));
+store.dispatch(addHobby('walking'));
+store.dispatch(removeHobby(3));
+store.dispatch(addMovie('heroes', 'action'));
+store.dispatch(removeMovie(3));
 
 store.dispatch({
   type: 'ADD_MOVIE',
