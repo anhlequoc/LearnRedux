@@ -1,5 +1,5 @@
 var redux = require('redux');
-var thunk = require('redux-thunk').default; //thunk is middleware to have action generators that return functions. Reason is if your action generator is doing something asynchronous and need dispatch action inside of it
+var thunk = require('redux-thunk').default; //thunk is middleware to have action generators that return functions. Reason is if your action generator is doing something asynchronous and need dispatch action inside of it. default nghia la dung default property cua thu vien nay
 var {nameReducer, hobbiesReducer, moviesReducer, mapReducer} = require('./../reducers/index'); //ES destructoring
 
 export var configure = () => {

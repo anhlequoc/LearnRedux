@@ -5,7 +5,6 @@ var axios = require('axios');
   modules.export = {
     changeName: changeName
   }
-
 */
 
 export var changeName = (name) => {
@@ -57,6 +56,7 @@ export var completeLocationFetch = (url) => {
   };
 };
 
+//action lúc này là 1 function (cac action tren la object) nên cần sử dụng middleware là thunk để xử lý
 export var fetchLocation = () => {
   return (dispatch, getState) => {
     dispatch(startLocationFetch());
