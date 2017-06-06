@@ -13,5 +13,6 @@ require('style!css!sass!applicationStyles');{/*load alias applicationStyles in w
 // );
 
 // require("./redux-example.jsx");
-require("./redux-example-2.jsx");
+//require("./redux-example-2.jsx");
 // require('./redux-todo-example.jsx');
+require("./pure-function");

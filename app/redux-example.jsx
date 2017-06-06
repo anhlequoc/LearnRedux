@@ -17,13 +17,12 @@ var stateDefault = {
 }
 */
 
+//reducer satisfied 2 condions:
+ // 1. reducer has default state, is just getting started
+// 2. reducer return a state even if there is no action or an action doesn't recognize
+
 var oldReducer = (state = stateDefault, action) => {
   //state = state || {name: "Anonymous");
-
-  //reducer satisfied 2 condions:
-   // 1. reducer has default state, is just getting started
-  // 2. reducer return a state even if there is no action or an action doesn't recognize
-
   switch (action.type) {
     case 'CHANGE_NAME':
       return {

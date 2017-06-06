@@ -6,3 +6,9 @@ console.log(length1);
 
 var func = () => ({foo: 1});
 console.log(func());
+
+function fn(x,...a) {
+  console.log(a);//2,3,4
+}
+
+fn(1,2,3,4);

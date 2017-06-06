@@ -1,3 +1,10 @@
+### Pure function
+3 principles of pure function
+  1. Same output with the same input
+  2. No side effect
+  3. avoide promises and asynchronous, only synchronous - meaning no request like accessing a database, making an HTTP request to some 3rd party API
+
+
 ### Redux
 - state của app được manage trong 1 object
 ```javascript
